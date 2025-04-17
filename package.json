@@ -1,0 +1,27 @@
+{
+  "name": "job-application-portal-backend",
+  "version": "1.0.0",
+  "description": "```\r Job Application Portal Backend\r ├─ .env\r ├─ config\r │  └─ mongoDB.js\r ├─ controllers\r │  ├─ applicationController.js\r │  ├─ authController.js\r │  └─ jobController.js\r ├─ middlewares\r │  └─ authMiddleware.js\r ├─ models\r │  ├─ Application.js\r │  ├─ Job.js\r │  └─ User.js\r ├─ routes\r │  ├─ applicationRoutes.js\r │  ├─ authRoutes.js\r │  ├─ jobRoutes.js\r │  └─ userRoutes.js\r └─ server.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
