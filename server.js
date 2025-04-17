@@ -11,7 +11,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: "*",
+  origin: "https://job-application-portal-wrao.onrender.com",
   credentials: true,
 }));
 app.use(express.json());
