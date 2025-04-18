@@ -13,7 +13,7 @@ const applicationSchema = new mongoose.Schema({
   },
   resumeUrl: {
     type: String,
-    required: false,
+    required: true,
   },
   status: {
     type: String,
