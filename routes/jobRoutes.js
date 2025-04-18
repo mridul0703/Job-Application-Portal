@@ -6,7 +6,8 @@ const {
   getJobById,
   updateJob,
   deleteJob,
-  getRecruiterJobs
+  getRecruiterJobs,
+  getRecentJobs
 } = require('../controllers/jobController');
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.get('/:id', getJobById);
 router.put('/:id', protect, checkRole('recruiter'), updateJob);
 router.delete('/:id', protect, checkRole('recruiter'), deleteJob);
 router.get('/myjobs', protect, checkRole('recruiter'), getRecruiterJobs);
+router.get('/recent', getRecentJobs);
 
 module.exports = router;
