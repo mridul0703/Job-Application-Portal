@@ -15,27 +15,29 @@ exports.getMyProfile = async (req, res) => {
   }
 };
 
-
 // @desc    Update current user's profile
 // @route   PUT /api/users/me
 // @access  Private
-
 exports.updateMyProfile = async (req, res) => {
   try {
-    const { name, skills, education, internships, languages, resumeUrl, company, position } = req.body;
+    const {
+      name, skills, resumeUrl, location, gender, dob, phone,
+      education, languages, internships, projects, bio,
+      certifications, awards, clubs,
+      company, position, industry, companyWebsite
+    } = req.body;
+
     const updates = {
-      name,
-      skills,
-      education,
-      internships,
-      languages,
-      resumeUrl,
+      name, skills, resumeUrl, location, gender, dob, phone,
+      education, languages, internships, projects, bio,
+      certifications, awards, clubs
     };
 
-    // Only for recruiters
     if (req.user.role === 'recruiter') {
       updates.company = company;
       updates.position = position;
+      updates.industry = industry;
+      updates.companyWebsite = companyWebsite;
     }
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, updates, {
@@ -48,6 +50,7 @@ exports.updateMyProfile = async (req, res) => {
     res.status(500).json({ message: 'Failed to update profile', error: error.message });
   }
 };
+
 
 // @desc    Get all users (Admin only)
 // @route   GET /api/users
