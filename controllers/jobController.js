@@ -131,3 +131,20 @@ exports.getRecruiterJobs = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch recruiter jobs' });
   }
 };
+
+
+
+
+// @desc    Get recent jobs (limit configurable)
+// @route   GET /api/jobs/recent?limit=5
+// @access  Public
+exports.getRecentJobs = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 5;
+
+    const jobs = await Job.find().sort({ createdAt: -1 }).limit(limit);
+    res.json({ jobs });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch recent jobs', error: error.message });
+  }
+};
