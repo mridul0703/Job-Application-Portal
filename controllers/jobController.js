@@ -25,30 +25,37 @@ exports.createJob = async (req, res) => {
 };
 
 // @desc    Get all job listings (with optional filters)
-// @route   GET /api/jobs?location=...&title=...
+// @route   GET /api/jobs/all?location=...&title=...&company=...&tags=React,Node
 // @access  Public
 exports.getJobs = async (req, res) => {
   try {
-    const { location, title } = req.query;
+    const { location, title, company, tags } = req.query;
     let query = {};
 
     if (location) {
-      query.location = new RegExp(location, 'i'); // Case-insensitive match
+      query.location = new RegExp(location, 'i');
     }
 
     if (title) {
       query.title = new RegExp(title, 'i');
     }
 
-    const jobs = await Job.find(query)
-      .populate('createdBy', 'name email')
-      .sort({ createdAt: -1 });
+    if (company) {
+      query.company = new RegExp(company, 'i');
+    }
 
-    res.status(200).json(jobs);
+    if (tags) {
+      const tagList = tags.split(',').map(tag => tag.trim());
+      query.tags = { $in: tagList };
+    }
+
+    const jobs = await Job.find(query);
+    res.json(jobs);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch jobs', error: error.message });
   }
 };
+
 
 // @desc    Get a job by ID
 // @route   GET /api/jobs/:id
