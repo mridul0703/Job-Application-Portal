@@ -6,22 +6,37 @@ const User = require('../models/User');
 exports.getMyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
+    if (user.role === 'admin') {
+      return res.status(403).json({ message: 'Admins do not have a profile.' });
+    }
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: 'Failed to get user profile', error: error.message });
   }
 };
 
+
 // @desc    Update current user's profile
 // @route   PUT /api/users/me
 // @access  Private
+
 exports.updateMyProfile = async (req, res) => {
   try {
+    const { name, skills, education, internships, languages, resumeUrl, company, position } = req.body;
     const updates = {
-      name: req.body.name,
-      email: req.body.email
-      // Add fields you allow users to update
+      name,
+      skills,
+      education,
+      internships,
+      languages,
+      resumeUrl,
     };
+
+    // Only for recruiters
+    if (req.user.role === 'recruiter') {
+      updates.company = company;
+      updates.position = position;
+    }
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,
