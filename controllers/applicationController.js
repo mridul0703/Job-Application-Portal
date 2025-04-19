@@ -160,3 +160,28 @@ exports.updateApplicationStatus = async (req, res) => {
     res.status(500).json({ message: 'Failed to update status', error: error.message });
   }
 };
+
+
+
+// @desc    Check if user applied to a job and return status
+// @route   GET /api/apply/:jobId/status
+// @access  Private (Job Seekers only)
+exports.getApplicationStatus = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const application = await Application.findOne({
+      job: jobId,
+      applicant: req.user._id
+    }).select('status');
+
+    if (!application) {
+      return res.status(404).json({ message: 'Not applied' });
+    }
+
+    res.status(200).json({ status: application.status });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch application status', error: error.message });
+  }
+};
+
