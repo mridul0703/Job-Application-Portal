@@ -1,6 +1,6 @@
 const express = require("express");
 const { config } = require("dotenv");
-const connectDB = require("./config/mongoDB"); // no .js needed in CommonJS
+const connectDB = require("./config/mongoDB");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
