@@ -30,4 +30,7 @@ router.delete('/:id', protect, checkRole('job-seeker', 'admin'), withdrawApplica
 // PUT /api/apply/:id/status → recruiter to update application status
 router.put('/:id/status', protect, checkRole('recruiter'), updateApplicationStatus);
 
+router.get('/:jobId/status', protect, checkRole('job-seeker'), getApplicationStatus);
+
+
 module.exports = router;
