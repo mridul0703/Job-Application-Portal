@@ -106,21 +106,34 @@ exports.getUserApplications = async (req, res) => {
 exports.withdrawApplication = async (req, res) => {
   try {
     const application = await Application.findById(req.params.id);
+
     if (!application) {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    // Check if the user is the applicant or admin
+    console.log("WITHDRAW: appId =", req.params.id);
+    console.log("Applicant ID:", application.applicant);
+    console.log("User ID:", req.user._id);
+    console.log("User Role:", req.user.role);
+
     if (application.applicant.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Not authorized to delete this application' });
     }
 
-    await application.remove();
+    try {
+      await application.remove();
+    } catch (err) {
+      console.error("Remove failed:", err);
+      return res.status(500).json({ message: 'Error removing application', error: err.message });
+    }
+
     res.status(200).json({ message: 'Application withdrawn successfully' });
   } catch (error) {
+    console.error("Withdraw application error:", error);
     res.status(500).json({ message: 'Failed to withdraw application', error: error.message });
   }
 };
+
 
 // @desc    Update application status (accept/reject)
 // @route   PUT /api/apply/:id/status
