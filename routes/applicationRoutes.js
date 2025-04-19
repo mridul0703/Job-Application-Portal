@@ -5,7 +5,8 @@ const {
   getJobApplications, 
   getUserApplications, 
   withdrawApplication, 
-  updateApplicationStatus 
+  updateApplicationStatus,
+  getApplicationStatus
 } = require('../controllers/applicationController');
 const { protect, checkRole } = require('../middlewares/authMiddleware');
 
