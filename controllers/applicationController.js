@@ -111,21 +111,15 @@ exports.withdrawApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found' });
     }
 
-    console.log("WITHDRAW: appId =", req.params.id);
-    console.log("Applicant ID:", application.applicant);
-    console.log("User ID:", req.user._id);
-    console.log("User Role:", req.user.role);
-
-    if (application.applicant.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+    // Permission check
+    if (
+      application.applicant.toString() !== req.user._id.toString() &&
+      req.user.role !== 'admin'
+    ) {
       return res.status(403).json({ message: 'Not authorized to delete this application' });
     }
 
-    try {
-      await application.remove();
-    } catch (err) {
-      console.error("Remove failed:", err);
-      return res.status(500).json({ message: 'Error removing application', error: err.message });
-    }
+    await Application.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: 'Application withdrawn successfully' });
   } catch (error) {
@@ -133,6 +127,7 @@ exports.withdrawApplication = async (req, res) => {
     res.status(500).json({ message: 'Failed to withdraw application', error: error.message });
   }
 };
+
 
 
 // @desc    Update application status (accept/reject)
