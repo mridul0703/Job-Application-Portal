@@ -14,6 +14,10 @@
   <img src="https://img.shields.io/github/last-commit/mridul0703/job-application-portal-backend?style=for-the-badge" />
   <img src="https://img.shields.io/github/issues/mridul0703/job-application-portal-backend?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" /><br/>
+  <!-- Extra GitHub Insight Badges -->
+<img src="https://komarev.com/ghpvc/?username=mridul0703&label=Views&color=0e75b6&style=for-the-badge" />
+<img src="https://img.shields.io/github/stars/mridul0703/job-application-portal-backend?style=for-the-badge" />
+<img src="https://img.shields.io/github/forks/mridul0703/job-application-portal-backend?style=for-the-badge" />
 </div>
 
 
